@@ -74,9 +74,15 @@ function rollAnimation() {
 			console.log(`Gracz na polu specjalnym ${currentPosition}`);
 		} else {
 			currentPosition += diceOne;
-			if (currentPosition === 19) {
-				currentPosition = 11;
-			}
+			setTimeout(() => {
+				if (currentPosition === 19) {
+					currentPosition = 11;
+					setTimeout(() => {
+						fields[10].classList.add("active");
+						fields[18].classList.remove("active");
+					}, 0);
+				}
+			}, 500);
 		}
 
 		if (currentPosition > boardSize) {
@@ -86,7 +92,7 @@ function rollAnimation() {
 		fields[currentPosition - 1].classList.add("active");
 		fields[previousPosition - 1].classList.remove("active");
 
-		if (currentPosition === 20 || currentPosition === -1) {
+		if (currentPosition === 20 || currentPosition === 12) {
 			endGame();
 		}
 	}, 1000);
@@ -101,6 +107,7 @@ function endGame() {
 			totalPoints / totalRolls
 		}`
 	);
+	btnDice.disabled = true;
 }
 
 btnDice.addEventListener("click", rollAnimation);
