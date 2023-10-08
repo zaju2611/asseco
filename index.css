@@ -45,7 +45,8 @@ main {
 	border-radius: 40%;
 }
 
-img {
+.pawn {
+	display: none;
 	height: 80%;
 }
 
@@ -124,6 +125,14 @@ img {
 	}
 }
 
+.boardPleace.active .pawn {
+	display: block;
+}
 .active {
 	box-shadow: 0 0 1rem 0.1rem var(--light-purple);
+}
+
+.pirate,
+.turnBack {
+	width: 60%;
 }
