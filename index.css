@@ -1,7 +1,7 @@
 :root {
 	--yellow: rgb(179, 199, 28);
 	--purple: rgb(35, 4, 54);
-	--light-purple: rgb(171, 90, 222);
+	--light-purple: rgb(162, 65, 222);
 }
 
 * {
@@ -31,6 +31,7 @@ main {
 	padding: 20px;
 	background-color: rgb(36, 34, 34);
 	overflow: hidden;
+	margin-right: 2rem;
 }
 
 .boardPleace {
@@ -124,5 +125,5 @@ img {
 }
 
 .active {
-	box-shadow: 0 0 15px 3px var(--light-purple);
+	box-shadow: 0 0 1rem 0.1rem var(--light-purple);
 }
