@@ -1,0 +1,128 @@
+:root {
+	--yellow: rgb(179, 199, 28);
+	--purple: rgb(35, 4, 54);
+	--light-purple: rgb(171, 90, 222);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background: linear-gradient(135deg, #9821c2, #3e2f4e, #000000);
+	color: white;
+	gap: 20px;
+}
+
+.boardArea {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	width: 500px;
+	height: 500px;
+	padding: 20px;
+	background-color: rgb(36, 34, 34);
+	overflow: hidden;
+}
+
+.boardPleace {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 70px;
+	height: 70px;
+	background-color: rgb(173, 159, 159);
+	margin: 10px;
+	border-radius: 40%;
+}
+
+img {
+	height: 80%;
+}
+
+.boardArea span:nth-child(1) {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: linear-gradient(to right, transparent, var(--yellow));
+	animation: animate_one 2s linear infinite;
+}
+
+@keyframes animate_one {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+.boardArea span:nth-child(2) {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 4px;
+	height: 100%;
+	background: linear-gradient(to bottom, transparent, var(--yellow));
+	animation: animate_two 2s linear infinite;
+	animation-delay: 1s;
+}
+
+@keyframes animate_two {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+.boardArea span:nth-child(3) {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 4px;
+	background: linear-gradient(to left, transparent, var(--yellow));
+	animation: animate_three 2s linear infinite;
+}
+
+@keyframes animate_three {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+.boardArea span:nth-child(4) {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 100%;
+	background: linear-gradient(to top, transparent, var(--yellow));
+	animation: animate_four 2s linear infinite;
+	animation-delay: 1s;
+}
+
+@keyframes animate_four {
+	0% {
+		transform: translateY(100%);
+	}
+	100% {
+		transform: translateY(-100%);
+	}
+}
+
+.active {
+	box-shadow: 0 0 15px 3px var(--light-purple);
+}
