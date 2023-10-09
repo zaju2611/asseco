@@ -88,7 +88,11 @@ function rollAnimation() {
 		console.log(`Rzut: ${diceOne}, Pozycja gracza: ${currentPosition}`);
 		fields[currentPosition - 1].classList.add("active");
 		fields[previousPosition - 1].classList.remove("active");
-
+		if (currentPosition === previousPosition) {
+			setTimeout(() => {
+				fields[currentPosition - 1].classList.add("active");
+			}, 500);
+		}
 		if (currentPosition === 20 || currentPosition === 12) {
 			endGame();
 		}
@@ -97,20 +101,22 @@ function rollAnimation() {
 
 function endGame() {
 	isGameInProgress = false;
+
+	setTimeout(() => {
+		currentPosition === 20
+			? showModal(
+					"Gratulacje!! Wygrałeś!!",
+					totalRolls,
+					(totalPoints / totalRolls).toFixed(2)
+			  )
+			: showModal(
+					"Przegrałeś, spróbuj jeszcze raz",
+					totalRolls,
+					(totalPoints / totalRolls).toFixed(2)
+			  );
+	}, 1000);
 	console.log(
-		`${
-			currentPosition === 20
-				? showModal(
-						"Gratulacje!! Wygrałeś!!",
-						totalRolls,
-						(totalPoints / totalRolls).toFixed(2)
-				  )
-				: showModal(
-						"Przegrałeś, spróbuj jeszcze raz",
-						totalRolls,
-						(totalPoints / totalRolls).toFixed(2)
-				  )
-		} Liczba rzutów: ${totalRolls}, Średnia wartość rzutu: ${
+		`Liczba rzutów: ${totalRolls}, Średnia wartość rzutu: ${
 			totalPoints / totalRolls
 		}`
 	);
