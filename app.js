@@ -22,11 +22,13 @@ o	Forma dostarczenia dowolna: całość na mail / zewnętrzne repo / github / et
 const btnDice = document.querySelector(".button");
 const diceContainer = document.querySelector(".dice_container_One");
 const fields = document.querySelectorAll(".boardPleace");
+const resetBtn = document.querySelector(".resetBtn");
 
 const boardSize = 20;
 const specialFields = {
 	12: -1,
 	19: 11,
+	20: -1,
 };
 let currentPosition = 1;
 let previousPosition = 1;
@@ -69,21 +71,16 @@ function rollAnimation() {
 		diceContainer.classList.remove("hide");
 		previousPosition = currentPosition;
 
-		if (specialFields[currentPosition]) {
-			currentPosition = specialFields[currentPosition];
-			console.log(`Gracz na polu specjalnym ${currentPosition}`);
-		} else {
-			currentPosition += diceOne;
-			setTimeout(() => {
-				if (currentPosition === 19) {
-					currentPosition = 11;
-					setTimeout(() => {
-						fields[10].classList.add("active");
-						fields[18].classList.remove("active");
-					}, 0);
-				}
-			}, 500);
-		}
+		currentPosition += diceOne;
+		setTimeout(() => {
+			if (currentPosition === 19) {
+				currentPosition = 11;
+				setTimeout(() => {
+					fields[10].classList.add("active");
+					fields[18].classList.remove("active");
+				}, 0);
+			}
+		}, 500);
 
 		if (currentPosition > boardSize) {
 			currentPosition = boardSize - (currentPosition - boardSize);
@@ -102,7 +99,17 @@ function endGame() {
 	isGameInProgress = false;
 	console.log(
 		`${
-			currentPosition === 20 ? "Gratulacje, wygrałeś!" : "Gracz przegrał."
+			currentPosition === 20
+				? showModal(
+						"Gratulacje!! Wygrałeś!!",
+						totalRolls,
+						(totalPoints / totalRolls).toFixed(2)
+				  )
+				: showModal(
+						"Przegrałeś, spróbuj jeszcze raz",
+						totalRolls,
+						(totalPoints / totalRolls).toFixed(2)
+				  )
 		} Liczba rzutów: ${totalRolls}, Średnia wartość rzutu: ${
 			totalPoints / totalRolls
 		}`
@@ -110,4 +117,31 @@ function endGame() {
 	btnDice.disabled = true;
 }
 
+function showModal(text, counter, average) {
+	const modal = document.querySelector(".modal");
+	const modalText = document.querySelector(".modal h2");
+	const results = document.querySelectorAll(".result p");
+	modalText.textContent = text;
+	results[0].textContent = counter;
+	results[1].textContent = average;
+	modal.style.display = "flex";
+}
+
+function resetGame() {
+	currentPosition = 1;
+	previousPosition = 1;
+	totalRolls = 0;
+	totalPoints = 0;
+	isGameInProgress = true;
+
+	fields.forEach((field) => field.classList.remove("active"));
+
+	fields[currentPosition - 1].classList.add("active");
+
+	const modal = document.querySelector(".modal");
+	modal.style.display = "none";
+	btnDice.disabled = false;
+}
+
 btnDice.addEventListener("click", rollAnimation);
+resetBtn.addEventListener("click", resetGame);
