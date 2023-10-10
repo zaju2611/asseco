@@ -169,20 +169,6 @@
 	grid-area: 3/3/3;
 }
 
-@media (max-width: 340px) {
-	.dice {
-		width: 12rem;
-		height: 12rem;
-	}
-
-	.dot {
-		border-radius: 50%;
-		width: 1.6rem;
-		height: 1.6rem;
-		margin: 0 0.3rem 0 0.3rem;
-	}
-}
-
 @keyframes flyDice {
 	0% {
 		transform: translateX(0);
