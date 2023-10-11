@@ -51,8 +51,8 @@ const rollDice = () => {
 };
 
 function rollAnimation() {
-	const backSound = new Audio("back.mp3");
-	const jumpSound = new Audio("step.mp3");
+	const backSound = new Audio("assets/sounds/back.mp3");
+	const jumpSound = new Audio("assets/sounds/step.mp3");
 	jumpSound.playbackRate = 3;
 	backSound.playbackRate = 3;
 	btnDice.disabled = true;
@@ -74,7 +74,6 @@ function rollAnimation() {
 
 		diceContainer.classList.remove("hide");
 		previousPosition = currentPosition;
-
 		currentPosition += diceOne;
 		jumpSound.play();
 		setTimeout(() => {
@@ -111,8 +110,8 @@ function updateFieldClasses() {
 }
 
 function endGame() {
-	const winSound = new Audio("win.mp3");
-	const lostSound = new Audio("lost.mp3");
+	const winSound = new Audio("assets/sounds/win.mp3");
+	const lostSound = new Audio("assets/sounds/lost.mp3");
 	isGameInProgress = false;
 	setTimeout(() => {
 		const text =
