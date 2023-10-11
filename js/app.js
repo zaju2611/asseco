@@ -1,32 +1,6 @@
-/*
-
-Zadanie programistyczne 
-•	Należy stworzyć aplikację, która będzie symulowała grę planszową. 
-•	Parametrem wejściowym powinna być liczba wyrzuconych oczek klasyczną kostką sześcienną. 
-•	Plansza ma 20 pól. Pola 12 i 19 są polami specjalnymi. 
-•	Użytkownik rzucą kostką raz za razem. Przesuwa się po planszy zgodnie z wyrzuconą liczbą oczek. Gra kończy się w przypadku wejścia na pole o numerze 12 (gra kończy się porażką), bądź osiągnięcia pola 20 (wygrana). 
-•	Jeżeli gracz po rzucie przekroczy pole 20, to cofa się o tyle oczek, o ile przekroczył pole 20 (np. stoi na 18 polu, jeżeli wyrzuci 5 oczek to cofa się do pola o numerze 17). 
-•	W przypadku trafienia na pole o numerze 19, gracz przesuwa się na pole o numerze 11. 
-•	Jako wynik użytkownik powinien dostać informację czy gra zakończyła się sukcesem, informację o liczbie rzutów oraz średnią liczbę wyrzuconych oczek. 
-•	Należy przygotować aplikację tak, aby można było dołożyć obsługę kolejnych pól specjalnych. 
-•	Przebieg gry można przedstawić za pomocą GUI lub informacji logowanych w konsoli 
- 
- 
-•	Założenia: 
-o	Język programowania: JavaScript 
-o	Można użyć dowolnych bibliotek zewnętrznych 
-o	Termin realizacji: do 13 października 2023 r., godzina 23:59 (piątek) 
-o	Forma dostarczenia dowolna: całość na mail / zewnętrzne repo / github / etc 
- 
- */
 const btnDice = document.querySelector(".button");
 const resetBtn = document.querySelector(".resetBtn");
 
-const specialFields = {
-	12: -1,
-	19: 11,
-	20: -1,
-};
 let currentPosition = 1;
 let previousPosition = 1;
 let totalRolls = 0;
@@ -52,6 +26,11 @@ function rollDice(diceContainer) {
 }
 
 function game() {
+	const specialFields = {
+		12: -1,
+		19: 11,
+		20: -10,
+	};
 	const boardSize = 20;
 	const fields = document.querySelectorAll(".boardPleace");
 	const diceContainer = document.querySelector(".dice_container_One");
