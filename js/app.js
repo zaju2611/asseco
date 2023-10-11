@@ -20,11 +20,8 @@ o	Forma dostarczenia dowolna: całość na mail / zewnętrzne repo / github / et
  
  */
 const btnDice = document.querySelector(".button");
-const diceContainer = document.querySelector(".dice_container_One");
-const fields = document.querySelectorAll(".boardPleace");
 const resetBtn = document.querySelector(".resetBtn");
 
-const boardSize = 20;
 const specialFields = {
 	12: -1,
 	19: 11,
@@ -34,48 +31,47 @@ let currentPosition = 1;
 let previousPosition = 1;
 let totalRolls = 0;
 let totalPoints = 0;
-let isGameInProgress = true;
 
-const diceFaces = [
-	"dice_one_f1",
-	"dice_one_f2",
-	"dice_one_f3",
-	"dice_one_f4",
-	"dice_one_f5",
-	"dice_one_f6",
-];
+function rollDice(diceContainer) {
+	const diceFaces = [
+		"dice_one_f1",
+		"dice_one_f2",
+		"dice_one_f3",
+		"dice_one_f4",
+		"dice_one_f5",
+		"dice_one_f6",
+	];
+	const diceOne = Math.floor(Math.random() * 6 + 1);
+	diceContainer.style.animation = "none";
+	diceFaces.forEach((face, index) => {
+		const diceElement = document.querySelector(`.${face}`);
+		diceElement.style.zIndex = diceOne === index + 1 ? "1" : "0";
+	});
+	diceContainer.classList.remove("hide");
+	return diceOne;
+}
 
-const rollDice = () => {
-	if (!isGameInProgress) return;
-	playTurn();
-};
-
-function rollAnimation() {
+function game() {
+	const boardSize = 20;
+	const fields = document.querySelectorAll(".boardPleace");
+	const diceContainer = document.querySelector(".dice_container_One");
 	const backSound = new Audio("assets/sounds/back.mp3");
 	const jumpSound = new Audio("assets/sounds/step.mp3");
+
+	diceContainer.classList.add("hide");
+	diceContainer.style.animation = "flyDice 2s";
 	jumpSound.playbackRate = 3;
 	backSound.playbackRate = 3;
 	btnDice.disabled = true;
-	diceContainer.classList.add("hide");
-	diceContainer.style.animation = "flyDice 2s";
 
 	setTimeout(() => {
-		const diceOne = Math.floor(Math.random() * 6 + 1);
-
+		const diceOne = rollDice(diceContainer);
 		totalRolls++;
 		totalPoints += diceOne;
-
-		diceContainer.style.animation = "none";
-
-		diceFaces.forEach((face, index) => {
-			const diceElement = document.querySelector(`.${face}`);
-			diceElement.style.zIndex = diceOne === index + 1 ? "1" : "0";
-		});
-
-		diceContainer.classList.remove("hide");
 		previousPosition = currentPosition;
 		currentPosition += diceOne;
 		jumpSound.play();
+
 		setTimeout(() => {
 			if (currentPosition === 19) {
 				currentPosition = 11;
@@ -91,7 +87,7 @@ function rollAnimation() {
 			currentPosition = boardSize - (currentPosition - boardSize);
 		}
 		console.log(`Rzut: ${diceOne}, Pozycja gracza: ${currentPosition}`);
-		updateFieldClasses();
+		updateFieldClasses(fields);
 		if (currentPosition === 20 || currentPosition === 12) {
 			endGame();
 		}
@@ -99,7 +95,7 @@ function rollAnimation() {
 	}, 1000);
 }
 
-function updateFieldClasses() {
+function updateFieldClasses(fields) {
 	fields[previousPosition - 1].classList.remove("active");
 	fields[currentPosition - 1].classList.add("active");
 	if (currentPosition === previousPosition) {
@@ -112,7 +108,7 @@ function updateFieldClasses() {
 function endGame() {
 	const winSound = new Audio("assets/sounds/win.mp3");
 	const lostSound = new Audio("assets/sounds/lost.mp3");
-	isGameInProgress = false;
+
 	setTimeout(() => {
 		const text =
 			currentPosition === 20
@@ -120,11 +116,7 @@ function endGame() {
 				: "Przegrałeś, spróbuj jeszcze raz";
 		showModal(text, totalRolls, (totalPoints / totalRolls).toFixed(2));
 
-		if (currentPosition === 20) {
-			winSound.play();
-		} else {
-			lostSound.play();
-		}
+		currentPosition === 20 ? winSound.play() : lostSound.play();
 	}, 1000);
 
 	console.log(
@@ -145,15 +137,13 @@ function showModal(text, counter, average) {
 	modal.style.display = "flex";
 }
 
-function resetGame() {
+function resetGame(fields) {
 	currentPosition = 1;
 	previousPosition = 1;
 	totalRolls = 0;
 	totalPoints = 0;
-	isGameInProgress = true;
 
 	fields.forEach((field) => field.classList.remove("active"));
-
 	fields[currentPosition - 1].classList.add("active");
 
 	const modal = document.querySelector(".modal");
@@ -161,5 +151,8 @@ function resetGame() {
 	btnDice.disabled = false;
 }
 
-btnDice.addEventListener("click", rollAnimation);
-resetBtn.addEventListener("click", resetGame);
+btnDice.addEventListener("click", game);
+resetBtn.addEventListener("click", () => {
+	const fields = document.querySelectorAll(".boardPleace");
+	resetGame(fields);
+});
