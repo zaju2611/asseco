@@ -51,6 +51,10 @@ const rollDice = () => {
 };
 
 function rollAnimation() {
+	const backSound = new Audio("back.mp3");
+	const jumpSound = new Audio("step.mp3");
+	jumpSound.playbackRate = 3;
+	backSound.playbackRate = 3;
 	btnDice.disabled = true;
 	diceContainer.classList.add("hide");
 	diceContainer.style.animation = "flyDice 2s";
@@ -72,9 +76,11 @@ function rollAnimation() {
 		previousPosition = currentPosition;
 
 		currentPosition += diceOne;
+		jumpSound.play();
 		setTimeout(() => {
 			if (currentPosition === 19) {
 				currentPosition = 11;
+				backSound.play();
 				setTimeout(() => {
 					fields[10].classList.add("active");
 					fields[18].classList.remove("active");
@@ -105,6 +111,8 @@ function updateFieldClasses() {
 }
 
 function endGame() {
+	const winSound = new Audio("win.mp3");
+	const lostSound = new Audio("lost.mp3");
 	isGameInProgress = false;
 	setTimeout(() => {
 		const text =
@@ -112,6 +120,12 @@ function endGame() {
 				? "Gratulacje!! Wygrałeś!!"
 				: "Przegrałeś, spróbuj jeszcze raz";
 		showModal(text, totalRolls, (totalPoints / totalRolls).toFixed(2));
+
+		if (currentPosition === 20) {
+			winSound.play();
+		} else {
+			lostSound.play();
+		}
 	}, 1000);
 
 	console.log(
