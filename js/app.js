@@ -25,6 +25,23 @@ function rollDice(diceContainer) {
 	return diceOne;
 }
 
+function movePlayerSpecialFields(specialFields, fields) {
+	const backSound = new Audio("assets/sounds/back.mp3");
+	backSound.playbackRate = 3;
+	if (currentPosition in specialFields) {
+		previousPosition = currentPosition;
+		currentPosition = specialFields[currentPosition];
+		setTimeout(() => {
+			fields[previousPosition - 1].classList.remove("active");
+			fields[currentPosition - 1].classList.add("active");
+			if (currentPosition !== 20 && currentPosition !== 12) {
+				backSound.play();
+			}
+		}, 0);
+	}
+}
+
+// wartość 12 - przegrana, wartośc 20 - wygrana
 function game() {
 	const specialFields = {
 		12: 12,
@@ -34,15 +51,13 @@ function game() {
 	const boardSize = 20;
 	const fields = document.querySelectorAll(".boardPleace");
 	const diceContainer = document.querySelector(".dice_container_One");
-	const backSound = new Audio("assets/sounds/back.mp3");
+
 	const jumpSound = new Audio("assets/sounds/step.mp3");
 
 	previousPosition = currentPosition;
 	diceContainer.classList.add("hide");
 	diceContainer.style.animation = "flyDice 2s";
 	jumpSound.playbackRate = 3;
-	backSound.playbackRate = 3;
-
 	btnDice.disabled = true;
 
 	setTimeout(() => {
@@ -59,21 +74,10 @@ function game() {
 			currentPosition = boardSize - (currentPosition - boardSize);
 		}
 		setTimeout(() => {
-			if (currentPosition in specialFields) {
-				previousPosition = currentPosition;
-				currentPosition = specialFields[currentPosition];
-				setTimeout(() => {
-					fields[previousPosition - 1].classList.remove("active");
-					fields[currentPosition - 1].classList.add("active");
-					if (currentPosition !== 20 && currentPosition !== 12) {
-						backSound.play();
-					}
-				}, 0);
-			}
+			movePlayerSpecialFields(specialFields, fields);
 		}, 500);
 
 		jumpSound.play();
-
 		console.log(`Rzut: ${diceOne}, Pozycja gracza: ${currentPosition}`);
 		updateFieldClasses(fields);
 		if (currentPosition === 20 || currentPosition === 12) {
@@ -136,6 +140,7 @@ function resetGame(fields) {
 
 	const modal = document.querySelector(".modal");
 	modal.style.display = "none";
+	console.clear();
 	btnDice.disabled = false;
 }
 
