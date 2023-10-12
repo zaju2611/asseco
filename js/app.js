@@ -6,6 +6,7 @@ let previousPosition = 1;
 let totalRolls = 0;
 let totalPoints = 0;
 
+//funckcja odpowiedzialna za animację kostki
 function rollDice(diceContainer) {
 	const diceFaces = [
 		"dice_one_f1",
@@ -25,6 +26,7 @@ function rollDice(diceContainer) {
 	return diceOne;
 }
 
+//funkcja do obługi pól specjalnych
 function movePlayerSpecialFields(specialFields, fields) {
 	const backSound = new Audio("assets/sounds/back.mp3");
 	backSound.playbackRate = 3;
@@ -42,6 +44,7 @@ function movePlayerSpecialFields(specialFields, fields) {
 }
 
 // wartość 12 - przegrana, wartośc 20 - wygrana
+//funckja obsługi gry
 function game() {
 	const specialFields = {
 		12: 12,
@@ -51,9 +54,7 @@ function game() {
 	const boardSize = 20;
 	const fields = document.querySelectorAll(".boardPleace");
 	const diceContainer = document.querySelector(".dice_container_One");
-
 	const jumpSound = new Audio("assets/sounds/step.mp3");
-
 	previousPosition = currentPosition;
 	diceContainer.classList.add("hide");
 	diceContainer.style.animation = "flyDice 2s";
@@ -71,6 +72,7 @@ function game() {
 					currentPosition - boardSize
 				}, idziesz na pole ${boardSize - (currentPosition - boardSize)}`
 			);
+
 			currentPosition = boardSize - (currentPosition - boardSize);
 		}
 		setTimeout(() => {
@@ -87,6 +89,7 @@ function game() {
 	}, 1000);
 }
 
+//funckja do uaktualnienia aktualnej pozycji na planszy
 function updateFieldClasses(fields) {
 	fields[currentPosition - 1].classList.add("active");
 	fields[previousPosition - 1].classList.remove("active");
@@ -97,6 +100,7 @@ function updateFieldClasses(fields) {
 	}
 }
 
+//funkcja do obsługi końca gry
 function endGame() {
 	const winSound = new Audio("assets/sounds/win.mp3");
 	const lostSound = new Audio("assets/sounds/lost.mp3");
@@ -119,6 +123,7 @@ function endGame() {
 	btnDice.disabled = true;
 }
 
+//funckja do pokazania modala po końcu gry
 function showModal(text, counter, average) {
 	const modal = document.querySelector(".modal");
 	const modalText = document.querySelector(".modal h2");
@@ -129,6 +134,7 @@ function showModal(text, counter, average) {
 	modal.style.display = "flex";
 }
 
+//funckja do resetowania ustawień
 function resetGame(fields) {
 	currentPosition = 1;
 	previousPosition = 1;
