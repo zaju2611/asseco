@@ -6,7 +6,7 @@ let previousPosition = 1;
 let totalRolls = 0;
 let totalPoints = 0;
 
-//funkcja odpowiedzialna za animację kostki
+//function for throwing dice
 function rollDice(diceContainer) {
 	const diceFaces = [
 		"diceFace1",
@@ -26,7 +26,7 @@ function rollDice(diceContainer) {
 	return diceValue;
 }
 
-//funkcja do obługi pól specjalnych
+//function for handling special fields
 function movePlayerSpecialFields(specialFields, fields) {
 	const backSound = new Audio("assets/sounds/back.mp3");
 	backSound.playbackRate = 3;
@@ -44,8 +44,8 @@ function movePlayerSpecialFields(specialFields, fields) {
 	}
 }
 
-// wartość 12 - przegrana, wartośc 20 - wygrana
-//funckja obsługi gry
+// value 12 - losing, value 20 - winning
+//game function
 function game() {
 	const specialFields = {
 		12: 12,
@@ -91,7 +91,7 @@ function game() {
 	}, 1000);
 }
 
-//funkcja do uaktualnienia aktualnej pozycji na planszy
+//function to update position
 function updateFieldClasses(fields) {
 	fields[currentPosition - 1].classList.add("active");
 	fields[previousPosition - 1].classList.remove("active");
@@ -102,7 +102,7 @@ function updateFieldClasses(fields) {
 	}
 }
 
-//funkcja do obsługi końca gry
+//end game function
 function endGame() {
 	const winSound = new Audio("assets/sounds/win.mp3");
 	const lostSound = new Audio("assets/sounds/lost.mp3");
@@ -124,7 +124,7 @@ function endGame() {
 	);
 }
 
-//funckja do pokazania modala po końcu gry
+//function to show modal
 function showModal(text, counter, average) {
 	const modal = document.querySelector(".modal");
 	const modalText = document.querySelector(".modal h2");
@@ -135,7 +135,7 @@ function showModal(text, counter, average) {
 	modal.style.display = "flex";
 }
 
-//funckja do resetowania ustawień
+//function to reset settings
 function resetGame(fields) {
 	currentPosition = 1;
 	previousPosition = 1;
@@ -152,7 +152,7 @@ function resetGame(fields) {
 	btnDice.disabled = false;
 }
 
-//funkcja do ustawiania powiadomień o grze
+//function to set game notifications
 function setText(text) {
 	const info = document.querySelector(".text");
 	info.textContent = text;
