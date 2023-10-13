@@ -11,9 +11,11 @@
 </head>
 
 <body>
-    <main>
-
-        <div class="boardArea">
+    <header class="header">
+        <p class="text">Rzuć kostką</p>
+    </header>
+    <main class="main">
+        <section class="boardArea">
             <span></span>
             <span></span>
             <span></span>
@@ -38,36 +40,36 @@
             <div class="boardPleace"><img class="pawn" src="./assets/img/pawn.png" alt="chess" /></div>
             <div class="boardPleace"><img class="turnBack" src="./assets/img/arrow.png" alt="turnBack" /></div>
             <div class="boardPleace"><img class="trophy" src="./assets/img/trophy.png" alt="trophy" /></div>
-        </div>
+        </section>
 
-        <div class="page_wrap">
-            <div class="dice_container_One hide">
-                <div class="dice diceGrid dice_one_f1">
+        <section class="pageWrap">
+            <div class="diceContainer hide">
+                <div class="dice diceGrid diceFace1">
                     <p class="dot"></p>
                 </div>
-                <div class="dice diceGrid dice_one_f2">
-                    <p class="dot"></p>
-                    <p class="dot"></p>
-                </div>
-                <div class="dice diceGrid dice_one_f3">
-                    <p class="dot"></p>
+                <div class="dice diceGrid diceFace2">
                     <p class="dot"></p>
                     <p class="dot"></p>
                 </div>
-                <div class="dice diceGrid dice_one_f4">
-                    <p class="dot"></p>
+                <div class="dice diceGrid diceFace3">
                     <p class="dot"></p>
                     <p class="dot"></p>
                     <p class="dot"></p>
                 </div>
-                <div class="dice diceGrid dice_one_f5">
-                    <p class="dot"></p>
+                <div class="dice diceGrid diceFace4">
                     <p class="dot"></p>
                     <p class="dot"></p>
                     <p class="dot"></p>
                     <p class="dot"></p>
                 </div>
-                <div class="dice diceGrid dice_one_f6">
+                <div class="dice diceGrid diceFace5">
+                    <p class="dot"></p>
+                    <p class="dot"></p>
+                    <p class="dot"></p>
+                    <p class="dot"></p>
+                    <p class="dot"></p>
+                </div>
+                <div class="dice diceGrid diceFace6">
                     <p class="dot"></p>
                     <p class="dot"></p>
                     <p class="dot"></p>
@@ -77,18 +79,19 @@
                 </div>
             </div>
             <button class="button" class="dice">Losuj</button>
+        </section>
     </main>
     <div class="modal">
         <div class="modalBox">
-            <h2>Jakiś tekst tu bedzie</h2>
+            <h2></h2>
             <div class="results">
                 <div class="result">
                     <h3>Liczba rzutów</h3>
-                    <p>58</p>
+                    <p></p>
                 </div>
                 <div class="result">
                     <h3>Średnia</h3>
-                    <p>3.16</p>
+                    <p></p>
                 </div>
             </div>
             <button class="button resetBtn">Reset</button>

@@ -2,6 +2,8 @@
 	--yellow: rgb(179, 199, 28);
 	--purple: rgb(35, 4, 54);
 	--light-purple: rgb(162, 65, 222);
+	--light-blue: #a2b7fb;
+	--gray: rgb(185, 184, 184);
 }
 
 * {
@@ -19,7 +21,7 @@ html {
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-main {
+.main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -27,6 +29,14 @@ main {
 	min-height: 60vh;
 	color: white;
 	gap: 20px;
+}
+
+.header {
+	text-align: center;
+	font-size: 1.3rem;
+	margin-bottom: 1.5rem;
+	color: aliceblue;
+	text-transform: uppercase;
 }
 
 .boardArea {
@@ -70,14 +80,6 @@ main {
 	animation: animate_one 2s linear infinite;
 }
 
-@keyframes animate_one {
-	0% {
-		transform: translateX(-100%);
-	}
-	100% {
-		transform: translateX(100%);
-	}
-}
 .boardArea span:nth-child(2) {
 	position: absolute;
 	top: 0;
@@ -89,14 +91,6 @@ main {
 	animation-delay: 1s;
 }
 
-@keyframes animate_two {
-	0% {
-		transform: translateY(-100%);
-	}
-	100% {
-		transform: translateY(100%);
-	}
-}
 .boardArea span:nth-child(3) {
 	position: absolute;
 	bottom: 0;
@@ -107,14 +101,6 @@ main {
 	animation: animate_three 2s linear infinite;
 }
 
-@keyframes animate_three {
-	0% {
-		transform: translateX(100%);
-	}
-	100% {
-		transform: translateX(-100%);
-	}
-}
 .boardArea span:nth-child(4) {
 	position: absolute;
 	top: 0;
@@ -124,15 +110,6 @@ main {
 	background: linear-gradient(to top, transparent, var(--yellow));
 	animation: animate_four 2s linear infinite;
 	animation-delay: 1s;
-}
-
-@keyframes animate_four {
-	0% {
-		transform: translateY(100%);
-	}
-	100% {
-		transform: translateY(-100%);
-	}
 }
 
 .boardPleace.active .pawn {
@@ -184,7 +161,6 @@ main {
 
 .result {
 	background-color: var(--purple);
-
 	border-radius: 5px;
 	padding: 10px;
 	width: 150px;
@@ -194,7 +170,7 @@ main {
 }
 
 .modalBox h2 {
-	font-size: 24px;
+	font-size: 1.5rem;
 	margin-bottom: 10px;
 }
 
@@ -209,14 +185,51 @@ main {
 	font-weight: bold;
 }
 
+@keyframes animate_one {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes animate_two {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes animate_three {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes animate_four {
+	0% {
+		transform: translateY(100%);
+	}
+	100% {
+		transform: translateY(-100%);
+	}
+}
+
 @media (max-width: 660px) {
-	main {
+	.main {
 		gap: 0;
+		flex-direction: column;
 	}
 	.boardArea {
 		margin-right: 0;
 	}
-	.page_wrap {
+	.pageWrap {
 		gap: 20px;
 		flex-direction: row;
 	}
@@ -232,6 +245,9 @@ main {
 }
 
 @media (max-width: 510px) {
+	.header {
+		font-size: 1rem;
+	}
 	.boardArea {
 		width: 400px;
 		height: 400px;
@@ -286,6 +302,9 @@ main {
 	}
 }
 @media (max-width: 340px) {
+	.header {
+		font-size: 0.7rem;
+	}
 	.boardArea {
 		padding: 5px;
 		width: 275px;

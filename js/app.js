@@ -6,24 +6,24 @@ let previousPosition = 1;
 let totalRolls = 0;
 let totalPoints = 0;
 
-//funckcja odpowiedzialna za animację kostki
+//funkcja odpowiedzialna za animację kostki
 function rollDice(diceContainer) {
 	const diceFaces = [
-		"dice_one_f1",
-		"dice_one_f2",
-		"dice_one_f3",
-		"dice_one_f4",
-		"dice_one_f5",
-		"dice_one_f6",
+		"diceFace1",
+		"diceFace2",
+		"diceFace3",
+		"diceFace4",
+		"diceFace5",
+		"diceFace6",
 	];
-	const diceOne = Math.floor(Math.random() * 6 + 1);
+	const diceValue = Math.floor(Math.random() * 6 + 1);
 	diceContainer.style.animation = "none";
 	diceFaces.forEach((face, index) => {
 		const diceElement = document.querySelector(`.${face}`);
-		diceElement.style.zIndex = diceOne === index + 1 ? "1" : "0";
+		diceElement.style.zIndex = diceValue === index + 1 ? "1" : "0";
 	});
 	diceContainer.classList.remove("hide");
-	return diceOne;
+	return diceValue;
 }
 
 //funkcja do obługi pól specjalnych
@@ -38,6 +38,7 @@ function movePlayerSpecialFields(specialFields, fields) {
 			fields[currentPosition - 1].classList.add("active");
 			if (currentPosition !== 20 && currentPosition !== 12) {
 				backSound.play();
+				setText(`Pole specjalne, przeskakujesz na pole ${currentPosition}`);
 			}
 		}, 0);
 	}
@@ -53,7 +54,7 @@ function game() {
 	};
 	const boardSize = 20;
 	const fields = document.querySelectorAll(".boardPleace");
-	const diceContainer = document.querySelector(".dice_container_One");
+	const diceContainer = document.querySelector(".diceContainer");
 	const jumpSound = new Audio("assets/sounds/step.mp3");
 	previousPosition = currentPosition;
 	diceContainer.classList.add("hide");
@@ -62,34 +63,35 @@ function game() {
 	btnDice.disabled = true;
 
 	setTimeout(() => {
-		const diceOne = rollDice(diceContainer);
+		const diceValue = rollDice(diceContainer);
 		totalRolls++;
-		totalPoints += diceOne;
-		currentPosition += diceOne;
+		totalPoints += diceValue;
+		currentPosition += diceValue;
 		if (currentPosition > boardSize) {
-			console.log(
+			setText(
 				`Przekroczyłeś rozmiar planszy o ${
 					currentPosition - boardSize
 				}, idziesz na pole ${boardSize - (currentPosition - boardSize)}`
 			);
 
 			currentPosition = boardSize - (currentPosition - boardSize);
+		} else {
+			setText(`Rzut: ${diceValue}, Aktualna pozycja: ${currentPosition}`);
 		}
 		setTimeout(() => {
 			movePlayerSpecialFields(specialFields, fields);
 		}, 500);
 
 		jumpSound.play();
-		console.log(`Rzut: ${diceOne}, Pozycja gracza: ${currentPosition}`);
+
 		updateFieldClasses(fields);
-		if (currentPosition === 20 || currentPosition === 12) {
-			endGame();
-		}
-		btnDice.disabled = false;
+		currentPosition === 20 || currentPosition === 12
+			? endGame()
+			: (btnDice.disabled = false);
 	}, 1000);
 }
 
-//funckja do uaktualnienia aktualnej pozycji na planszy
+//funkcja do uaktualnienia aktualnej pozycji na planszy
 function updateFieldClasses(fields) {
 	fields[currentPosition - 1].classList.add("active");
 	fields[previousPosition - 1].classList.remove("active");
@@ -115,12 +117,11 @@ function endGame() {
 		currentPosition === 20 ? winSound.play() : lostSound.play();
 	}, 1000);
 
-	console.log(
-		`Liczba rzutów: ${totalRolls}, Średnia wartość rzutu: ${
+	setText(
+		`Liczba rzutów: ${totalRolls}, Średnia wartość rzutu: ${(
 			totalPoints / totalRolls
-		}`
+		).toFixed(2)}`
 	);
-	btnDice.disabled = true;
 }
 
 //funckja do pokazania modala po końcu gry
@@ -147,7 +148,15 @@ function resetGame(fields) {
 	const modal = document.querySelector(".modal");
 	modal.style.display = "none";
 	console.clear();
+	setText(`Rzuć kostką`);
 	btnDice.disabled = false;
+}
+
+//funkcja do ustawiania powiadomień o grze
+function setText(text) {
+	const info = document.querySelector(".text");
+	info.textContent = text;
+	console.log(text);
 }
 
 btnDice.addEventListener("click", game);
